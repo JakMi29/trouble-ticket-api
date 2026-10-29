@@ -25,8 +25,13 @@ public class SecurityConfig {
         HttpSecurity admin = http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth").permitAll()
-                        .requestMatchers("/api/v1/test").hasRole("ADMIN")
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html",
+                                "/api/v1/auth").permitAll()
+                        .requestMatchers("/api/v1/note").hasRole("ADMIN")
+                        .requestMatchers("/api/v1/troubleTicket").authenticated()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

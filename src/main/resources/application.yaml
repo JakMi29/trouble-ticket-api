@@ -2,10 +2,10 @@ spring:
   application:
     name: trouble-ticket-api
   datasource:
-    url: jdbc:postgresql://localhost:5432/trouble_ticket_api
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/trouble_ticket_api}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
-    username: postgres
-    password: postgres
   jpa:
     hibernate:
       ddl-auto: none

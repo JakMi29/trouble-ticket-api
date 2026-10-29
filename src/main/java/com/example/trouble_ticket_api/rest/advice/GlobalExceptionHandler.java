@@ -1,6 +1,7 @@
 package com.example.trouble_ticket_api.rest.advice;
 
 import com.example.trouble_ticket_api.configuration.security.RequestUtils;
+import com.example.trouble_ticket_api.domain.exception.BadRequestException;
 import com.example.trouble_ticket_api.domain.exception.NotFoundException;
 import com.example.trouble_ticket_api.rest.response.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,6 +25,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 RequestUtils.getRequestId(request)
         );
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ErrorResponse> handleBadRequestException(BadRequestException ex, HttpServletRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                ex.getCode(),
+                ex.getMessage(),
+                RequestUtils.getRequestId(request)
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
